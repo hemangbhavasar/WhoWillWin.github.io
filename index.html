@@ -1,0 +1,144 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+
+<title>Who Win's Where in North Carolina?</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="When birds and planes collide...">
+    <meta name="author" content="Jeffrey Shaffer">
+
+  <!-- <link rel="stylesheet" href="leapstrap.css" /> -->
+  <!-- <link rel="stylesheet" href="example.css" /> -->
+	
+	<script src="annyang.min.js"></script>
+	<script src="responsivevoice.js"></script>
+
+	<script src="https://public.tableausoftware.com/javascripts/api/tableau_v8.debug.js" type="text/javascript"></script> 
+	<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+  </head>
+
+  <body onload=initializeViz();>
+	
+    <h1><center>Who Win's Where in North Carolina?</center></h1>
+	<!-- <h3><font color=#000000><center>Meeting Month: <i>"May 2017"</i></center></font></h3> -->
+	<h3><center><i>(Requires Chrome and Microphone)</center></i></h3>
+	<h3><center>For Voice Commands Say "<i>Filter Democrats</i>","<i>Select Republicans</i>","<i>Start Over</i>","<i>Export</i>","<i>Remove Filter</i>"</center></h3>
+	<br>
+<div id="audio"></div>
+
+<center><div id=tableauViz></div></center>
+
+<script>
+if (annyang) {
+  //<h5><i>Visualization Created by <a href="https://twitter.com/bhavasarhemang" target="_blank"><span class="Name"><i>HEMANG //BHAVASAR	</i></span></a> 
+	//</i></h5> Previous Heading
+  // These are the voice commands in quotes followed by the function
+  var commands = {
+  'show all': function() { startover(); responsiveVoice.speak('showing all','UK English Male'); },
+	'export': function() { exportPDF(); responsiveVoice.speak('exporting','UK English Male'); },
+	'start over': function() { startover(); responsiveVoice.speak('starting over','UK English Male'); },
+	'Filter Democrats': function() { filterMA(); responsiveVoice.speak('filtering Medicine A','UK English Male'); },
+	'Filter Republicans': function() { filterMB(); responsiveVoice.speak('filtering Medicine B','UK English Male'); },
+	//'Filter Medicine C': function() { filterMC(); responsiveVoice.speak('filtering Medicine C','UK English Male'); },
+	//'Filter Medicine D': function() { filterMD(); responsiveVoice.speak('filtering Medicine D','UK English Male'); },
+  //'Filter Medicine E': function() { filterME(); responsiveVoice.speak('filtering Medicine E','UK English Male'); },
+  'Select Democrats': function() { selectMAS(); responsiveVoice.speak('selecting Medicine A','UK English Male'); },
+  'Select Republicans': function() { selectMBS(); responsiveVoice.speak('selecting Medicine B','UK English Male'); },
+  //'Select Medicine C': function() { selectMCS(); responsiveVoice.speak('selecting Medicine C','UK English Male'); },
+  //'Select Medicine D': function() { selectMDS(); responsiveVoice.speak('selecting Medicine D','UK English Male'); },
+  //'Select Medicine E': function() { selectMES(); responsiveVoice.speak('selecting Medicine E','UK English Male'); },  
+	'remove filter': function() { removeFilter(); responsiveVoice.speak('removing filter','UK English Male'); },
+ };
+  
+  // Add commands to annyang
+  annyang.addCommands(commands);
+
+  // Start listening.
+  annyang.start();
+}
+</script>
+
+<script>
+
+var viz, workbook, activeSheet, Worksheet, worksheet;;
+function initializeViz(){
+
+var placeholderDiv = document.getElementById("tableauViz");
+
+var url = "https://public.tableau.com/views/WhoWins_16073686670150/USElectionResultinNorthCarolina?:language=en&::embed=y&:display_count=yes&:showVizHome=no";
+
+var options = {
+   width: "1600px",   
+   height: "950px",
+   hideTabs: true,
+   hideToolbar: true,
+  onFirstInteractive: function () {
+  workbook = viz.getWorkbook();
+  activeSheet = workbook.getActiveSheet();
+}
+};
+  viz = new tableauSoftware.Viz(placeholderDiv, url, options);
+  
+  }
+
+responsiveVoice.speak('Hi. My name is Hemang. Welcome to The Dashboard. How can I help you?','UK English Male');
+
+
+// Select Medicine
+
+function showAll()
+{
+//activeSheet.getWorksheets()[1].applyFilterAsync("Year", "", tableauSoftware.FilterUpdateType.REPLACE);
+activeSheet.getWorksheets()[0].applyFilterAsync("Trump Biden Color", "", tableauSoftware.FilterUpdateType.REPLACE);
+}
+
+function selectMAS()
+	{
+	activeSheet.getWorksheets()[0].selectMarksAsync('Trump Biden Color', 'Democrats', 'REPLACE'); 
+	}	  
+
+function selectMBS()
+	{
+	activeSheet.getWorksheets()[0].selectMarksAsync('Trump Biden Color', 'Republicans', 'REPLACE'); 
+	}	  
+   
+//Filter Medicine
+
+function filterMA()
+{
+activeSheet.getWorksheets()[0].applyFilterAsync('Trump Biden Color', 'Democrats', tableauSoftware.FilterUpdateType.REPLACE); 
+}
+
+function filterMB()
+{
+activeSheet.getWorksheets()[0].applyFilterAsync('Trump Biden Color', 'Republicans', tableauSoftware.FilterUpdateType.REPLACE); 
+}
+
+function removeFilter()
+{
+activeSheet.getWorksheets()[0].applyFilterAsync('Trump Biden Color', ['Democrats', 'Republicans'],tableauSoftware.FilterUpdateType.ALL); 
+}
+  
+//UI Control
+
+function exportPDF()
+{
+
+viz.showExportPDFDialog();
+}
+
+function startover()
+{
+
+viz.revertAllAsync();
+}
+
+</script>
+
+  </body>
+</html>
