@@ -10,8 +10,8 @@ Built with ❤︎ and :coffee: by  [HEMANG BHAVASAR](https://github.com/hemangbh
 
 
 
-# MedicalDashboard.github.io
-For Medicla Dashboard Tableau+VoiceCommands JavaScript
+# WhoWillWin.github.io
+For US Election Result Dashboard Tableau+VoiceCommands JavaScript
 
 
 # Donation
