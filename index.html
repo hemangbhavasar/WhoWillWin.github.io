@@ -27,7 +27,7 @@
     <h1><center>Who Win's Where in North Carolina?</center></h1>
 	<!-- <h3><font color=#000000><center>Meeting Month: <i>"May 2017"</i></center></font></h3> -->
 	<h3><center><i>(Requires Chrome and Microphone)</center></i></h3>
-	<h3><center>For Voice Commands Say "<i>Filter Democrats</i>","<i>Select Republicans</i>","<i>Start Over</i>","<i>Export</i>","<i>Remove Filter</i>"</center></h3>
+	<h3><center>For Voice Commands Say "<i>Filter Rural Metro</i>","<i>Select Urban</i>","<i>Start Over</i>","<i>Export</i>","<i>Remove Filter</i>"</center></h3>
 	<br>
 <div id="audio"></div>
 
@@ -39,19 +39,17 @@ if (annyang) {
 	//</i></h5> Previous Heading
   // These are the voice commands in quotes followed by the function
   var commands = {
-  'show all': function() { startover(); responsiveVoice.speak('showing all','UK English Male'); },
+	'show all': function() { startover(); responsiveVoice.speak('showing all','UK English Male'); },
 	'export': function() { exportPDF(); responsiveVoice.speak('exporting','UK English Male'); },
 	'start over': function() { startover(); responsiveVoice.speak('starting over','UK English Male'); },
-	'Filter Democrats': function() { filterMA(); responsiveVoice.speak('filtering Medicine A','UK English Male'); },
-	'Filter Republicans': function() { filterMB(); responsiveVoice.speak('filtering Medicine B','UK English Male'); },
-	//'Filter Medicine C': function() { filterMC(); responsiveVoice.speak('filtering Medicine C','UK English Male'); },
-	//'Filter Medicine D': function() { filterMD(); responsiveVoice.speak('filtering Medicine D','UK English Male'); },
-  //'Filter Medicine E': function() { filterME(); responsiveVoice.speak('filtering Medicine E','UK English Male'); },
-  'Select Democrats': function() { selectMAS(); responsiveVoice.speak('selecting Medicine A','UK English Male'); },
-  'Select Republicans': function() { selectMBS(); responsiveVoice.speak('selecting Medicine B','UK English Male'); },
-  //'Select Medicine C': function() { selectMCS(); responsiveVoice.speak('selecting Medicine C','UK English Male'); },
-  //'Select Medicine D': function() { selectMDS(); responsiveVoice.speak('selecting Medicine D','UK English Male'); },
-  //'Select Medicine E': function() { selectMES(); responsiveVoice.speak('selecting Medicine E','UK English Male'); },  
+	'Filter Rural Metro': function() { filterMA(); responsiveVoice.speak('filtering Rural Metro','UK English Male'); },
+	'Filter Rural Non-Metro': function() { filterMB(); responsiveVoice.speak('filtering Rural Non-Metro','UK English Male'); },
+	'Filter Suburban': function() { filterMC(); responsiveVoice.speak('filtering Suburban','UK English Male'); },
+	'Filter Urban': function() { filterMD(); responsiveVoice.speak('filtering Urban','UK English Male'); },
+	'Select Rural Metro': function() { selectMAS(); responsiveVoice.speak('selecting Rural Metro','UK English Male'); },
+	'Select Rural Non-Metro': function() { selectMBS(); responsiveVoice.speak('selecting Rural Non-Metro','UK English Male'); },  
+	'Select Suburban': function() { selectMCS(); responsiveVoice.speak('selecting Suburban','UK English Male'); },
+	'Select Urban': function() { selectMDS(); responsiveVoice.speak('selecting Urban','UK English Male'); }, 
 	'remove filter': function() { removeFilter(); responsiveVoice.speak('removing filter','UK English Male'); },
  };
   
@@ -89,39 +87,49 @@ var options = {
 responsiveVoice.speak('Hi. My name is Hemang. Welcome to The Dashboard. How can I help you?','UK English Male');
 
 
-// Select Medicine
+// Select Area
 
 function showAll()
 {
 //activeSheet.getWorksheets()[1].applyFilterAsync("Year", "", tableauSoftware.FilterUpdateType.REPLACE);
-activeSheet.getWorksheets()[0].applyFilterAsync("Trump Biden Color", "", tableauSoftware.FilterUpdateType.REPLACE);
+activeSheet.getWorksheets()[0].applyFilterAsync("County Type", "", tableauSoftware.FilterUpdateType.REPLACE);
 }
 
 function selectMAS()
 	{
-	activeSheet.getWorksheets()[0].selectMarksAsync('Trump Biden Color', 'Democrats', 'REPLACE'); 
+	activeSheet.getWorksheets()[0].selectMarksAsync('County Type', 'Rural Metro', 'REPLACE'); 
 	}	  
 
 function selectMBS()
 	{
-	activeSheet.getWorksheets()[0].selectMarksAsync('Trump Biden Color', 'Republicans', 'REPLACE'); 
+	activeSheet.getWorksheets()[0].selectMarksAsync('County Type', 'Rural Non-Metro', 'REPLACE'); 
+	}	
+	
+function selectMCS()
+	{
+	activeSheet.getWorksheets()[0].selectMarksAsync('County Type', 'Suburban', 'REPLACE'); 
+	}
+	
+function selectMDS()
+	{
+	activeSheet.getWorksheets()[0].selectMarksAsync('County Type', 'Urban', 'REPLACE'); 
 	}	  
    
-//Filter Medicine
+//Filter Area
 
 function filterMA()
 {
-activeSheet.getWorksheets()[0].applyFilterAsync('Trump Biden Color', 'Democrats', tableauSoftware.FilterUpdateType.REPLACE); 
+activeSheet.getWorksheets()[0].applyFilterAsync('County Type', 'Rural Metro', tableauSoftware.FilterUpdateType.REPLACE); 
 }
 
 function filterMB()
 {
-activeSheet.getWorksheets()[0].applyFilterAsync('Trump Biden Color', 'Republicans', tableauSoftware.FilterUpdateType.REPLACE); 
+activeSheet.getWorksheets()[0].applyFilterAsync('County Type', 'Rural Non-Metro', tableauSoftware.FilterUpdateType.REPLACE); 
 }
 
 function removeFilter()
 {
-activeSheet.getWorksheets()[0].applyFilterAsync('Trump Biden Color', ['Democrats', 'Republicans'],tableauSoftware.FilterUpdateType.ALL); 
+activeSheet.getWorksheets()[0].applyFilterAsync('County Type', ['Rural Metro', 'Rural Non-Metro'],tableauSoftware.FilterUpdateType.ALL); 
 }
   
 //UI Control
